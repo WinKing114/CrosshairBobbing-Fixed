@@ -30,8 +30,8 @@ Modifications in version 1.10.1 (summary; see docs/修复记录.md for details):
   * Removed a leftover @Overwrite that modified the window title.
   * Corrected version / license metadata and version mapping.
 
-The complete corresponding source code for every released binary is this
-repository (tag v1.10.1). Build instructions are in readme.md.
+The project source and build instructions are available in this repository;
+see README.md. The partial sources JAR alone does not contain the full project.
 
 Fix maintainer: WinKing (GitHub: WinKing114).
 Publication documentation updated on 2026-11-11; implementation unchanged.
