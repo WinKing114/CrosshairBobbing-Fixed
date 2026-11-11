@@ -1,10 +1,10 @@
-# Crosshair Bobbing fixed（中文说明）
+# CrosshairBobbing Fixed
 
-[English README](README.md)
+[English](README.md) · [更新日志](CHANGELOG.md) · [测试说明](TESTING.md)
 
 基于 [Krash220/CrosshairBobbingMod](https://github.com/Krash220/CrosshairBobbingMod) 官方 **1.10** 的**非官方修复分支**，版本 **1.10.1**。原作者已于 2024 年停止更新；本分支只修缺陷，不改动画算法、数值与配置键，也不新增游戏版本支持。
 
-## 支持范围
+## 兼容性
 
 - 先前游戏内实测仅覆盖 **Minecraft 1.20.1 / Forge 47.4.28**。
 - 源码含 1.16.2–1.20.2 范围的 Forge / Fabric 适配，不代表所有组合均可用。**Forge 1.17 不支持，对应目标为 1.17.1**；内部目录名 `forge1.17` 保留。NeoForge 未验证。
@@ -32,7 +32,7 @@
 
 仓库根目录执行 `gradle buildMod --no-daemon`，产物在 `dists/`。`-sources.jar` 只含共享核心 + API 桩，完整源码就是本仓库。
 
-## 验证状态
+## 验证
 
 - 先前游戏内实测**只有 Minecraft 1.20.1 / Forge 47.4.28**；历史编译记录与本轮构建结果分开记录在 [TESTING.md](TESTING.md)。
 - 精确 HUD 隔离**只在 Forge 1.20.x 生效**；Fabric 全系与更旧 Forge 版本可能仍有同类问题。
@@ -44,4 +44,4 @@
 
 - 原作者 **Krash220**，本分支与原作者无关。
 - 修复者：**WinKing（GitHub：WinKing114）**。
-- **GPL-3.0-only**（见 `LICENSE` 与 `NOTICE`）；本仓库保留完整工程源码和构建逻辑，部分内容的 sources.jar 不能替代本仓库。
+- **GPL-3.0-only**（见 [LICENSE](LICENSE) 与 [NOTICE](NOTICE)）；本仓库保留完整工程源码和构建逻辑，部分内容的 sources.jar 不能替代本仓库。
