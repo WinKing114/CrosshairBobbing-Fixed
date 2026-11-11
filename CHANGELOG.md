@@ -29,7 +29,7 @@ First release of this unofficial fix branch, based on upstream 1.10.
 
 ### Known limitations
 
-- In-game verified on Minecraft 1.20.1 Forge only; other versions are compile-tested, not play-tested.
+- Previous in-game testing covers Minecraft 1.20.1 / Forge 47.4.28 only. The historical build covered the included version modules; other combinations were not game-tested. See [TESTING.md](TESTING.md).
 - The precise `renderCrosshair`-scope fix applies to Forge 1.20.x only — Fabric builds and older Forge builds may still show the original bar problems.
 - Third-party crosshair / HUD mod combinations were not tested; the charge bar (#6) and several upstream issues (#12, #13, #14, #16) remain unresolved.
 
