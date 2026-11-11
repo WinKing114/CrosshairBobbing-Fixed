@@ -1,0 +1,37 @@
+Crosshair Bobbing fixed
+=======================
+
+NOTICE — attribution and modifications
+
+This project is a modified, unofficial fork of "Crosshair Bobbing" by Krash220:
+    https://github.com/Krash220/CrosshairBobbingMod
+
+Original project copyright (c) the Crosshair Bobbing contributors / Krash220.
+The original repository is distributed under the GNU General Public License,
+version 3 (see LICENSE). This fork is distributed under the same license,
+GPL-3.0-only.
+
+This fork is NOT affiliated with, endorsed by, or maintained by the original
+author. The upstream author discontinued development in 2024.
+
+Modifications in version 1.10.1 (summary; see docs/修复记录.md for details):
+  * Fixed startup crashes on Quilt / mismatched loaders (upstream issues #11, #18).
+  * Confined the crosshair matrix transform to the whole Gui.renderCrosshair
+    method body on Forge 1.20 / 1.20.1 / 1.20.2, so the vanilla crosshair and
+    its own CROSSHAIR attack indicator move together, while HUD elements drawn
+    outside that method (hotbar, health bars, third-party overlays) are not
+    rotated, scaled or displaced (MC百科 comment #30, issues #3 / #6 / #13).
+    All original animation values are unchanged.
+  * Hardened config parsing (corrupt files fall back to defaults).
+  * Guarded optional CameraOverhaul integration against version mismatches.
+  * Fixed paired matrix push/pop with a fallback restore, duplicate event
+    registration, and swallowed entrypoint exceptions.
+  * Removed a dead TaCZ Maven dependency and unused Fabric-side TaCZ code.
+  * Removed a leftover @Overwrite that modified the window title.
+  * Corrected version / license metadata and version mapping.
+
+The complete corresponding source code for every released binary is this
+repository (tag v1.10.1). Build instructions are in readme.md.
+
+Fix maintainer: WinKing (GitHub: WinKing114).
+Publication documentation updated on 2026-11-11; implementation unchanged.

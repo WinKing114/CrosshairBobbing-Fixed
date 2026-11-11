@@ -1,0 +1,72 @@
+// Apply to forge* project
+
+buildscript {
+    repositories {
+        maven {
+            name = 'Sponge'
+            url = 'https://repo.spongepowered.org/maven'
+        }
+    }
+    dependencies {
+        classpath 'org.spongepowered:mixingradle:0.7.+'
+    }
+}
+
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'org.spongepowered.mixin'
+
+repositories {
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "Modrinth"
+                url = "https://api.modrinth.com/maven"
+            }
+        }
+        filter {
+            includeGroup "maven.modrinth"
+        }
+    }
+    exclusiveContent {
+        forRepository {
+            maven {
+                url "https://cursemaven.com"
+            }
+        }
+        filter {
+            includeGroup "curse.maven"
+        }
+    }
+}
+
+minecraft {
+    mappings channel: project.mapping_channel, version: project.mapping_version
+}
+
+dependencies {
+    minecraft "net.minecraftforge:forge:${project.forge_version}"
+    if ("1.17".compareTo(project.forge_version) < 0) {
+        implementation "maven.modrinth:camera-overhaul-reforged:EoKxgKTA"
+    } else {
+        implementation "curse.maven:camera-overhaul-forge-443034:3191725"
+    }
+
+    // 代码不规范，维护两行泪
+    if ("1.19".equals(project.mapping_version) || "1.19.3".equals(project.mapping_version) || "1.20.1".equals(project.mapping_version)) {
+        implementation "maven.modrinth:timeless-and-classics-zero:VIAwq0sR"
+    } else if ("1.17.1".equals(project.mapping_version)) {
+        implementation "maven.modrinth:timeless-and-classics-zero:la8E97Hu"
+    }
+
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+}
+
+mixin {
+    add sourceSets.main, "mixin.${mod.id}.refmap.json"
+}
+
+jar.finalizedBy('reobfJar')
+
+processResources {
+    rename 'mixin.json', "mixin.${mod.id}.json"
+}

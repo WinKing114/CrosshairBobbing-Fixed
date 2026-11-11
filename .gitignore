@@ -1,0 +1,25 @@
+# Gradle
+/gradle/wrapper/gradle-wrapper.jar
+**/.gradle
+**/build
+**/run
+/dists
+/gradlew
+/gradlew.bat
+
+# Eclipse
+**/.classpath
+**/.project
+**/.settings
+**/bin
+!**/src/**/bin
+
+# Local IDE and machine files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+.env
+.env.*
+*.log
+*.hprof
