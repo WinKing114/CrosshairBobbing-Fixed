@@ -1,12 +1,12 @@
-# CrosshairBobbing Fixed 1.10.1
+# CrosshairBobbing Fixed
 
 An **unofficial** bug-fix fork of [Krash220/CrosshairBobbingMod](https://github.com/Krash220/CrosshairBobbingMod), based on the upstream **1.10** release. This fork is version **1.10.1**.
 
 It keeps the original design, animation values, config keys and multi-version / multi-loader support, and only fixes defects. The upstream author discontinued development in 2024; **no new Minecraft versions are added**.
 
-[中文说明 / Chinese README](README.zh-CN.md) · [Changelog](CHANGELOG.md) · [Detailed fix notes (中文)](docs/修复记录.md) · [Test report (中文)](docs/测试结果.md)
+[简体中文](README.zh-CN.md) · [Changelog](CHANGELOG.md) · [Testing](TESTING.md)
 
-## Supported
+## Compatibility
 
 - **Verified in-game (previous report): Minecraft 1.20.1 / Forge 47.4.28 only.**
 - The source includes Forge / Fabric adapters within Minecraft 1.16.2–1.20.2; this range is not a promise that every combination works. See [TESTING.md](TESTING.md).
@@ -24,7 +24,7 @@ It keeps the original design, animation values, config keys and multi-version / 
 - Sneaking, item-switch and critical-hit animations
 - Per-animation toggles via Mod Menu / Forge config screen
 
-## What's fixed
+## Fixes
 
 - Startup crashes caused by Quilt platform misdetection and failed core-class injection ([#11](https://github.com/Krash220/CrosshairBobbingMod/issues/11), [#18](https://github.com/Krash220/CrosshairBobbingMod/issues/18)) — unsupported loaders are now skipped gracefully.
 - "Progress bars flying around" (MC百科 comment #30, [#3](https://github.com/Krash220/CrosshairBobbingMod/issues/3) / #6 / #13) **and** the vanilla CROSSHAIR attack indicator being left behind while the crosshair rotates: on **Forge 1.20 / 1.20.1 / 1.20.2** the matrix transform is confined to the whole `Gui.renderCrosshair` method body, so the vanilla crosshair and its own attack indicator bob / rotate together (no longer detached), while health bars, the hotbar, the HOTBAR attack indicator and third-party HUD elements (drawn outside that method) are not rotated, scaled or displaced. **All crosshair animations are kept** — nothing was disabled to hide the bug.
@@ -58,16 +58,16 @@ This project uses the upstream FFM1 multi-version build framework. There is **no
 
 `buildMod` runs `validateApi` for every version module. First build downloads Minecraft, Forge, Fabric and Yarn dependencies and takes several minutes.
 
-## Verification status (please read)
+## Verification
 
-- Previous in-game testing covers **Minecraft 1.20.1 / Forge 47.4.28 only**. Historical module compilation and the current build attempt are distinguished in [TESTING.md](TESTING.md).
+- Previous in-game testing covers **Minecraft 1.20.1 / Forge 47.4.28 only**. Historical module compilation and the 2026-11-11 build are distinguished in [TESTING.md](TESTING.md).
 - The precise `renderCrosshair`-scope fix applies **only to Forge 1.20 / 1.20.1 / 1.20.2**. Fabric builds and older Forge builds still use the previous injection and may still show the original bar problems.
 - Combinations with third-party crosshair / HUD mods (Dynamic Crosshair, Immersive Aircraft, RRLS, Shoulder Surfing, Custom Crosshairs, Inventory HUD+, TaCZ, CameraOverhaul) were **not** tested.
 - Still unresolved: charge-bar behaviour (#6), some third-party HUD conflicts, and issue #16 (crash log unavailable).
 
 See [docs/测试结果.md](docs/测试结果.md) for the full layered test report.
 
-## Credits & license
+## Credits and license
 
 - Original mod by **Krash220** — <https://github.com/Krash220/CrosshairBobbingMod>. This fork is **not affiliated with** the original author.
 - Fix maintainer: **WinKing ([WinKing114](https://github.com/WinKing114))**.
