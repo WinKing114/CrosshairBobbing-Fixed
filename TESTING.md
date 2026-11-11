@@ -31,7 +31,7 @@ The prior report records a successful `buildMod` across the version modules. The
 
 The refined HUD scope applies to the Forge 1.20 / 1.20.1 / 1.20.2 adapter family. Fabric and older Forge adapters retain earlier injection behavior. Third-party crosshair/HUD combinations and unresolved upstream issues are listed in [CHANGELOG.md](CHANGELOG.md).
 
-## Current build attempt
+## Build verification (2026-11-11)
 
 The dated result is recorded in [docs/BUILD-2026-11-11.md](docs/BUILD-2026-11-11.md). Use **Gradle 7.6** with **JDK 17** to run:
 
