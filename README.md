@@ -1,75 +1,40 @@
 # CrosshairBobbing Fixed
 
-An **unofficial** bug-fix fork of [Krash220/CrosshairBobbingMod](https://github.com/Krash220/CrosshairBobbingMod), based on the upstream **1.10** release. This fork is version **1.10.1**.
+![Client-side](https://img.shields.io/badge/Environment-Client-5b9c51?style=flat)
+![Version 1.10.1](https://img.shields.io/badge/Version-1.10.1-5b9c51?style=flat)
+[![CurseForge Downloads](https://img.shields.io/badge/CurseForge-Download-5b9c51?style=flat)](https://www.curseforge.com/minecraft/mc-mods/crosshairbobbing-fixed/files/9498005)
+![License GPL-3.0-only](https://img.shields.io/badge/License-GPL--3.0--only-5b9c51?style=flat)
 
-It keeps the original design, animation values, config keys and multi-version / multi-loader support, and only fixes defects. The upstream author discontinued development in 2024; **no new Minecraft versions are added**.
+[简体中文](README.zh-CN.md) · [Download](https://www.curseforge.com/minecraft/mc-mods/crosshairbobbing-fixed/files/9498005) · [Changelog](CHANGELOG.md) · [Testing](TESTING.md)
 
-[简体中文](README.zh-CN.md) · [Changelog](CHANGELOG.md) · [Testing](TESTING.md)
+**CrosshairBobbing Fixed** is a client-side Minecraft mod that makes the crosshair follow view bobbing and react when you attack, break blocks, charge a bow, eat, or drink. Version **1.10.1** is an unofficial bug-fix fork of [Krash220's Crosshair Bobbing](https://github.com/Krash220/CrosshairBobbingMod) 1.10 and retains the original animations and configuration options.
 
-## Compatibility
+## What's Included
 
-- **Verified in-game (previous report): Minecraft 1.20.1 / Forge 47.4.28 only.**
-- The source includes Forge / Fabric adapters within Minecraft 1.16.2–1.20.2; this range is not a promise that every combination works. See [TESTING.md](TESTING.md).
-- **Forge 1.17 is unsupported; the corresponding build target is 1.17.1.** The internal directory remains `game/forge1.17` for source compatibility.
-- NeoForge has not been verified and is not advertised as supported.
-- **Quilt**: mod functionality is inactive. Graceful skipping is implemented, but no Quilt in-game test is claimed.
-- **1.20.3+ / 1.21 / 25.x / 26.x**: unsupported — a clear error is shown instead of loading a wrong implementation.
-
-## Features (unchanged from upstream)
-
-- Crosshair follows view bobbing (requires "View Bobbing" enabled)
-- Shaking on attacking entities / breaking blocks
-- Charging animations for bow, trident and crossbow
-- Eating / drinking animation
-- Sneaking, item-switch and critical-hit animations
-- Per-animation toggles via Mod Menu / Forge config screen
-
-## Fixes
-
-- Startup crashes caused by Quilt platform misdetection and failed core-class injection ([#11](https://github.com/Krash220/CrosshairBobbingMod/issues/11), [#18](https://github.com/Krash220/CrosshairBobbingMod/issues/18)) — unsupported loaders are now skipped gracefully.
-- "Progress bars flying around" (MC百科 comment #30, [#3](https://github.com/Krash220/CrosshairBobbingMod/issues/3) / #6 / #13) **and** the vanilla CROSSHAIR attack indicator being left behind while the crosshair rotates: on **Forge 1.20 / 1.20.1 / 1.20.2** the matrix transform is confined to the whole `Gui.renderCrosshair` method body, so the vanilla crosshair and its own attack indicator bob / rotate together (no longer detached), while health bars, the hotbar, the HOTBAR attack indicator and third-party HUD elements (drawn outside that method) are not rotated, scaled or displaced. **All crosshair animations are kept** — nothing was disabled to hide the bug.
-- Corrupted or mistyped config silently disabling the mod — now falls back to defaults and rewrites a valid config file.
-- CameraOverhaul version mismatches no longer crash; matrix push/pop is strictly paired with a fallback restore; duplicate Forge event registration and swallowed entrypoint errors fixed.
-- Build failure caused by a dead TaCZ Maven dependency in upstream `fabric.gradle`.
-- Removed a leftover `@Overwrite` that appended debug text to the window title.
-- Version / license metadata corrected (`1.10.1`, GPL-3.0-only); snapshot version mapping fixed; README and en_us typo fixed.
+- **Crosshair animations** follow camera movement and react to actions including sneaking, item switching, critical hits, and charging a bow, crossbow, or trident. You can toggle individual animations in Mod Menu or the Forge config screen.
+- **HUD rendering fix** on Forge **1.20 / 1.20.1 / 1.20.2**. The crosshair and its vanilla attack indicator share the same movement. The hotbar, health bars, and HUD elements drawn outside `Gui.renderCrosshair` stay in place.
+- **Startup and configuration fixes** address specific loader-detection and injection failures, recover invalid config files with defaults, and guard against certain CameraOverhaul version mismatches. See the [changelog](CHANGELOG.md) for the full list.
 
 ## Installation
 
-1. Install Minecraft **1.20.1 with Forge 47.4.28** for the previously tested combination.
-2. Download `CrosshairBobbing-1.10.1.jar` from [CrosshairBobbing Fixed on CurseForge](https://www.curseforge.com/minecraft/mc-mods/crosshairbobbing-fixed).
-3. Remove the original Crosshair Bobbing JAR and other copies of this mod, then put the fixed JAR in the client instance's `mods` folder. Do not install the `-dev.jar` or `-sources.jar` as the mod.
-4. Start the client; enable View Bobbing for view-bobbing animation. Other loader/version combinations require separate verification.
+1. Download [CrosshairBobbing 1.10.1 on CurseForge](https://www.curseforge.com/minecraft/mc-mods/crosshairbobbing-fixed/files/9498005).
+2. Remove the original Crosshair Bobbing JAR and any duplicate copies. Install the fixed JAR in your client instance's `mods/` folder. The `-dev.jar` and `-sources.jar` are for development.
+3. Enable **View Bobbing** in Minecraft for the crosshair to follow camera bobbing.
 
-## Building
+## Requirements & Compatibility
 
-This project uses the upstream FFM1 multi-version build framework. There is **no `gradlew` script**; install Gradle yourself.
+- **Previously tested in game:** Minecraft **1.20.1 / Forge 47.4.28**. See [Testing](TESTING.md) for the tested scenarios, binary hash, and separate build results.
+- **Forge and Fabric source adapters** cover selected versions in the Minecraft **1.16.2–1.20.2** range. The Forge 1.17-series target is **1.17.1**. Older Forge and Fabric adapters may still show the original HUD issue.
+- **NeoForge** and third-party crosshair/HUD mod combinations remain unverified. **Quilt** skips mod activation. Minecraft **1.20.3 and later** are unsupported. Charge-bar behavior and other open items are listed in the [changelog](CHANGELOG.md).
 
-1. **JDK 17** to run Gradle; the project targets Java 8 / 16 per module and Gradle provisions the toolchains automatically.
-2. Use **Gradle 7.6** (see `gradle/wrapper/gradle-wrapper.properties`).
-3. **Important:** place Gradle in a **plain ASCII path**. A path containing non-ASCII characters (e.g. Chinese) breaks the JDK 16 toolchain's worker `@argfile` and fails with `ClassNotFoundException: SystemApplicationClassLoaderWorker`.
-4. From the repository root:
+## Feedback & Issue Reporting
 
-   ```
-   gradle buildMod --no-daemon
-   ```
+Report issues on [GitHub](https://github.com/WinKing114/CrosshairBobbing-Fixed/issues). Include the Minecraft and loader versions, relevant HUD mods, steps to reproduce, and your `latest.log`.
 
-5. Outputs in `dists/`: `CrosshairBobbing-1.10.1.jar` (the usable mod), plus `-dev.jar` and `-sources.jar` for development. Note `-sources.jar` only contains the shared core + API stubs; the full source is this repository.
+### Building from Source
 
-`buildMod` runs `validateApi` for every version module. First build downloads Minecraft, Forge, Fabric and Yarn dependencies and takes several minutes.
+Use **JDK 17** and **Gradle 7.6** installed in an ASCII-only path, then run `gradle buildMod --no-daemon` from the repository root. The project uses the upstream FFM1 build framework and requires a local Gradle installation. Build output goes to `dists/`, and the `-sources.jar` contains the shared core and API stubs. See [build verification](docs/BUILD-2026-11-11.md) for details.
 
-## Verification
+## License & Credits
 
-- Previous in-game testing covers **Minecraft 1.20.1 / Forge 47.4.28 only**. Historical module compilation and the 2026-11-11 build are distinguished in [TESTING.md](TESTING.md).
-- The precise `renderCrosshair`-scope fix applies **only to Forge 1.20 / 1.20.1 / 1.20.2**. Fabric builds and older Forge builds still use the previous injection and may still show the original bar problems.
-- Combinations with third-party crosshair / HUD mods (Dynamic Crosshair, Immersive Aircraft, RRLS, Shoulder Surfing, Custom Crosshairs, Inventory HUD+, TaCZ, CameraOverhaul) were **not** tested.
-- Still unresolved: charge-bar behaviour (#6), some third-party HUD conflicts, and issue #16 (crash log unavailable).
-
-See [docs/测试结果.md](docs/测试结果.md) for the full layered test report.
-
-## Credits and license
-
-- Original mod by **Krash220** — <https://github.com/Krash220/CrosshairBobbingMod>. This fork is **not affiliated with** the original author.
-- Fix maintainer: **WinKing ([WinKing114](https://github.com/WinKing114))**.
-- **GPL-3.0-only** — see [LICENSE](LICENSE) and [NOTICE](NOTICE). This repository contains the complete project source and build logic; the partial `-sources.jar` alone is not the complete project.
-- The upstream `mod.properties` mistakenly said MIT; this fork corrects it to GPL-3.0-only to match the repository LICENSE.
+Original mod by **Krash220**. This independent fork is maintained by **WinKing** under **GPL-3.0-only**. See [LICENSE](LICENSE) and [NOTICE](NOTICE).

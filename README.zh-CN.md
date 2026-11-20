@@ -1,47 +1,40 @@
 # CrosshairBobbing Fixed
 
-[English](README.md) · [更新日志](CHANGELOG.md) · [测试说明](TESTING.md)
+![Client-side](https://img.shields.io/badge/Environment-Client-5b9c51?style=flat)
+![Version 1.10.1](https://img.shields.io/badge/Version-1.10.1-5b9c51?style=flat)
+[![CurseForge Downloads](https://img.shields.io/badge/CurseForge-Download-5b9c51?style=flat)](https://www.curseforge.com/minecraft/mc-mods/crosshairbobbing-fixed/files/9498005)
+![License GPL-3.0-only](https://img.shields.io/badge/License-GPL--3.0--only-5b9c51?style=flat)
 
-基于 [Krash220/CrosshairBobbingMod](https://github.com/Krash220/CrosshairBobbingMod) 官方 **1.10** 的**非官方修复分支**，版本 **1.10.1**。原作者已于 2024 年停止更新；本分支只修缺陷，不改动画算法、数值与配置键，也不新增游戏版本支持。
+[English](README.md) · [下载](https://www.curseforge.com/minecraft/mc-mods/crosshairbobbing-fixed/files/9498005) · [更新日志](CHANGELOG.md) · [测试说明](TESTING.md)
 
-## 兼容性
+**CrosshairBobbing Fixed** 是一款 Minecraft 客户端模组，让准星跟随视角摇晃，并在攻击、挖掘、弓箭蓄力、进食和饮水时播放对应动画。**1.10.1** 是基于 [Krash220 的 Crosshair Bobbing](https://github.com/Krash220/CrosshairBobbingMod) 1.10 的非官方修复版，保留原有动画和配置选项。
 
-- 先前游戏内实测仅覆盖 **Minecraft 1.20.1 / Forge 47.4.28**。
-- 源码含 1.16.2–1.20.2 范围的 Forge / Fabric 适配，不代表所有组合均可用。**Forge 1.17 不支持，对应目标为 1.17.1**；内部目录名 `forge1.17` 保留。NeoForge 未验证。
-- **Quilt**：模组功能不生效；源码实现了跳过加载，未做 Quilt 游戏内验证。
-- **1.20.3+ / 1.21 / 25.x / 26.x**：不支持，会给出明确错误而不是加载错误实现。
+## 功能与修复
 
-## 修复内容
-
-- Quilt 平台误判、内核类反射注入失败导致的启动崩溃（#11 / #18）：改为优雅跳过。
-- 「准星与攻击指示器脱节 / 其它 HUD 乱飞」（MC百科 30 楼、#3 / #6 / #13）：**Forge 1.20 / 1.20.1 / 1.20.2** 上把矩阵变换精确限定在 `Gui.renderCrosshair` 方法体内，vanilla 准星与它自带的 CROSSHAIR 攻击指示器共用同一套变换、一起摇晃旋转（不再脱节）；血条、热键栏、HOTBAR 攻击指示器与第三方 HUD 画在方法之外，不受旋转 / 缩放 / 位移影响。准星动画全部保留，没有靠关动画掩盖问题。
-- 配置损坏 / 类型错误导致模组静默失效：回退默认值并重写配置。
-- CameraOverhaul 版本不匹配崩溃、矩阵未恢复兜底、Forge 事件重复注册、入口点异常被吞掉。
-- 官方仓库里已下线的 TaCZ 依赖导致 `buildMod` 失败。
-- 删除改写窗口标题的 `@Overwrite` 调试残留；版本号 / 许可证标注更正（GPL-3.0-only）。
+- **准星动画** 随视角移动，并对潜行、切换物品、暴击以及弓、弩和三叉戟蓄力等动作作出反馈。可在 Mod Menu 或 Forge 配置界面逐项开关。
+- **HUD 渲染修复** 适用于 Forge **1.20 / 1.20.1 / 1.20.2**。原版准星与准星位置的攻击指示器同步移动，热键栏、生命值以及在 `Gui.renderCrosshair` 之外绘制的 HUD 元素保持原位。
+- **启动和配置修复** 针对特定加载器误判和注入失败处理，配置无效时回退到默认值，并处理特定 CameraOverhaul 版本不匹配。完整条目见[更新日志](CHANGELOG.md)。
 
 ## 安装
 
-从 [CurseForge](https://www.curseforge.com/minecraft/mc-mods/crosshairbobbing-fixed) 下载正式模组 JAR，移除原版和重复副本，放入客户端实例的 `mods` 文件夹。先前实测组合为 Minecraft 1.20.1 / Forge 47.4.28。不要安装开发包或源码包；视角摇晃动画需要开启游戏的视角摇晃设置。
+1. 从 [CurseForge 下载 CrosshairBobbing 1.10.1](https://www.curseforge.com/minecraft/mc-mods/crosshairbobbing-fixed/files/9498005)。
+2. 移除原版 Crosshair Bobbing 和重复副本，将修复版 JAR 放入客户端实例的 `mods/` 文件夹。`-dev.jar` 和 `-sources.jar` 供开发使用。
+3. 在游戏设置中启用**视角摇晃**，准星才会跟随视角摇晃。
 
-## 构建
+## 运行要求与兼容性
 
-项目沿用上游 FFM1 框架，**没有 gradlew**，需自备 **Gradle 7.6 + JDK 17**。
+- 既有游戏内测试覆盖 **Minecraft 1.20.1 / Forge 47.4.28**。测试场景、JAR 哈希和构建结果见[测试说明](TESTING.md)。
+- 源码包含 **Minecraft 1.16.2–1.20.2** 范围内的部分 Forge 和 Fabric 适配。Forge 1.17 系列的目标是 **1.17.1**。Fabric 和较旧的 Forge 适配仍可能出现原 HUD 问题。
+- NeoForge 与第三方准星、HUD 模组组合仍待验证。Quilt 下会跳过模组功能。Minecraft **1.20.3 及更新版本**不受支持。蓄力条等已知问题见[更新日志](CHANGELOG.md)。
 
-> **重要**：Gradle 必须放在**纯英文路径**。中文路径会让 JDK 16 toolchain 的 worker `@argfile` 乱码，报 `ClassNotFoundException: SystemApplicationClassLoaderWorker`。
+## 反馈与问题报告
 
-仓库根目录执行 `gradle buildMod --no-daemon`，产物在 `dists/`。`-sources.jar` 只含共享核心 + API 桩，完整源码就是本仓库。
+请在 [GitHub Issues](https://github.com/WinKing114/CrosshairBobbing-Fixed/issues) 提交问题，并附上 Minecraft 与加载器版本、相关 HUD 模组、复现步骤和 `latest.log`。
 
-## 验证
+### 从源码构建
 
-- 先前游戏内实测**只有 Minecraft 1.20.1 / Forge 47.4.28**；历史编译记录与本轮构建结果分开记录在 [TESTING.md](TESTING.md)。
-- 精确 HUD 隔离**只在 Forge 1.20.x 生效**；Fabric 全系与更旧 Forge 版本可能仍有同类问题。
-- 第三方准星 / HUD 模组组合未实测；#6 蓄力条、部分上游 issue 仍未解决。
+使用 **JDK 17** 和安装在纯 ASCII 路径下的 **Gradle 7.6**，在仓库根目录执行 `gradle buildMod --no-daemon`。项目沿用上游 FFM1 构建框架，需要本机安装 Gradle。输出位于 `dists/`，其中 `-sources.jar` 包含共享核心与 API 桩。详见[构建验证记录](docs/BUILD-2026-11-11.md)。
 
-详见 [docs/修复记录.md](docs/修复记录.md) 与 [docs/测试结果.md](docs/测试结果.md)。
+## 许可证与署名
 
-## 署名与许可证
-
-- 原作者 **Krash220**，本分支与原作者无关。
-- 修复者：**WinKing（GitHub：WinKing114）**。
-- **GPL-3.0-only**（见 [LICENSE](LICENSE) 与 [NOTICE](NOTICE)）；本仓库保留完整工程源码和构建逻辑，部分内容的 sources.jar 不能替代本仓库。
+原始模组由 **Krash220** 创作。本独立分支由 **WinKing** 按 **GPL-3.0-only** 维护，相关条款和署名见 [LICENSE](LICENSE) 与 [NOTICE](NOTICE)。
