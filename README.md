@@ -3,7 +3,7 @@
 ![Client-side](https://img.shields.io/badge/Environment-Client-5b9c51?style=flat)
 ![Version 1.10.1](https://img.shields.io/badge/Version-1.10.1-5b9c51?style=flat)
 [![CurseForge Downloads](https://img.shields.io/badge/CurseForge-Download-5b9c51?style=flat)](https://www.curseforge.com/minecraft/mc-mods/crosshairbobbing-fixed/files/9498005)
-![License GPL-3.0-only](https://img.shields.io/badge/License-GPL--3.0--only-5b9c51?style=flat)
+![License GPL-3.0-only](https://img.shields.io/badge/License-GPL--3.0--only-5b9c51?style=flat) <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=dubole114%40gmail.com"><img src="https://img.shields.io/badge/PayPal-Donate-5b9c51?style=flat" alt="Donate via PayPal" /></a>
 
 [简体中文](README.zh-CN.md) · [Download](https://www.curseforge.com/minecraft/mc-mods/crosshairbobbing-fixed/files/9498005) · [Changelog](CHANGELOG.md) · [Testing](TESTING.md)
 
