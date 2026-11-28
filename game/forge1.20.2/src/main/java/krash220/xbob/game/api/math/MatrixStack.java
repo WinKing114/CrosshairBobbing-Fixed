@@ -49,4 +49,12 @@ public class MatrixStack {
 
         return new float[] {vec.x(), vec.y(), vec.z(), vec.w()};
     }
+
+    public void transformPoint(float x, float y, float z, float w, float[] out) {
+        float[] res = multiplyVector(x, y, z, w);
+        out[0] = res[0];
+        out[1] = res[1];
+        out[2] = res[2];
+        out[3] = res[3];
+    }
 }

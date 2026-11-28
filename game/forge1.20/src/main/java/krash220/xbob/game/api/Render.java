@@ -116,25 +116,53 @@ public class Render {
         }
     }
 
+    private static final float MAX_DEPTH = 128.0F;
+    private static int cachedDepthTick = Integer.MIN_VALUE;
+    private static double cachedEyeX, cachedEyeY, cachedEyeZ;
+    private static double cachedViewX, cachedViewY, cachedViewZ;
+    private static float cachedDepth = MAX_DEPTH;
+
     public static float getCenterDepth() {
         Minecraft mc = Minecraft.getInstance();
         Entity entity = mc.getCameraEntity();
-        float partialTicks = mc.getFrameTime();
-
-        if (entity != null && mc.level != null) {
-            Vec3 vec3 = entity.getEyePosition(partialTicks);
-            Vec3 vec31 = entity.getViewVector(partialTicks);
-            Vec3 vec32 = vec3.add(vec31.x * 1000F, vec31.y * 1000F, vec31.z * 1000F);
-            HitResult result = mc.level.clip(new ClipContext(vec3, vec32, ClipContext.Block.VISUAL, ClipContext.Fluid.NONE, entity));
-
-            if (result.getType() != HitResult.Type.MISS) {
-                Vec3 begin = entity.getEyePosition(partialTicks);
-                Vec3 end = result.getLocation();
-
-                return (float) end.distanceTo(begin);
-            }
+        if (entity == null || mc.level == null) {
+            return MAX_DEPTH;
         }
 
-        return 1000F;
+        float partialTicks = mc.getFrameTime();
+        Vec3 eye = entity.getEyePosition(partialTicks);
+
+        // Fast path: reuse Minecraft's current crosshair hitResult when it already hit a block/entity
+        HitResult crosshairHit = mc.hitResult;
+        if (crosshairHit != null && crosshairHit.getType() != HitResult.Type.MISS) {
+            float d = (float) crosshairHit.getLocation().distanceTo(eye);
+            cachedDepth = Math.min(d, MAX_DEPTH);
+            return cachedDepth;
+        }
+
+        Vec3 view = entity.getViewVector(partialTicks);
+        int tick = entity.tickCount;
+        if (tick == cachedDepthTick
+                && Math.abs(eye.x - cachedEyeX) < 1.0e-3
+                && Math.abs(eye.y - cachedEyeY) < 1.0e-3
+                && Math.abs(eye.z - cachedEyeZ) < 1.0e-3
+                && Math.abs(view.x - cachedViewX) < 5.0e-4
+                && Math.abs(view.y - cachedViewY) < 5.0e-4
+                && Math.abs(view.z - cachedViewZ) < 5.0e-4) {
+            return cachedDepth;
+        }
+
+        Vec3 end = eye.add(view.x * MAX_DEPTH, view.y * MAX_DEPTH, view.z * MAX_DEPTH);
+        HitResult result = mc.level.clip(new ClipContext(eye, end, ClipContext.Block.VISUAL, ClipContext.Fluid.NONE, entity));
+
+        cachedDepthTick = tick;
+        cachedEyeX = eye.x;
+        cachedEyeY = eye.y;
+        cachedEyeZ = eye.z;
+        cachedViewX = view.x;
+        cachedViewY = view.y;
+        cachedViewZ = view.z;
+        cachedDepth = result.getType() != HitResult.Type.MISS ? (float) result.getLocation().distanceTo(eye) : MAX_DEPTH;
+        return cachedDepth;
     }
 }

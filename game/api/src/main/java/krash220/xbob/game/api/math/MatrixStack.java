@@ -15,4 +15,12 @@ public class MatrixStack {
     public void identity() {throw new UnsupportedOperationException();}
 
     public float[] multiplyVector(float x, float y, float z, float w) {throw new UnsupportedOperationException();}
+
+    public void transformPoint(float x, float y, float z, float w, float[] out4) {
+        float[] res = this.multiplyVector(x, y, z, w);
+        out4[0] = res[0];
+        out4[1] = res[1];
+        out4[2] = res[2];
+        out4[3] = res[3];
+    }
 }

@@ -1,5 +1,6 @@
 {
-    "required": true,
-    "package": "${MOD_PACKAGE}.mixin",
-    "refmap": "mixin.${MOD_ID}.refmap.json"
+  "required": true,
+  "package": "${MOD_PACKAGE}.mixin",
+  "refmap": "mixin.${MOD_ID}.refmap.json",
+  "minVersion": "0.8"
 }

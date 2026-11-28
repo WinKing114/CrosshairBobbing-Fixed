@@ -1,14 +1,19 @@
 package krash220.xbob.game.api.math;
 
+import org.joml.Quaternionf;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
 
 public class MatrixStack {
 
-    public final PoseStack mat;
+    public PoseStack mat;
+
+    private final Vector3f scratchAxis = new Vector3f();
+    private final Quaternionf scratchQuat = new Quaternionf();
+    private final Vector4f scratchVec = new Vector4f();
+    private final float[] scratchOut = new float[4];
 
     public MatrixStack() {
         this.mat = new PoseStack();
@@ -16,6 +21,11 @@ public class MatrixStack {
 
     public MatrixStack(PoseStack mat) {
         this.mat = mat;
+    }
+
+    public MatrixStack rebind(PoseStack mat) {
+        this.mat = mat;
+        return this;
     }
 
     public void push() {
@@ -31,7 +41,9 @@ public class MatrixStack {
     }
 
     public void rotate(float angle, float x, float y, float z) {
-        this.mat.mulPose(Axis.of(new Vector3f(x, y, z)).rotationDegrees(angle));
+        this.scratchAxis.set(x, y, z);
+        this.scratchQuat.fromAxisAngleDeg(this.scratchAxis, angle);
+        this.mat.mulPose(this.scratchQuat);
     }
 
     public void scale(float x, float y, float z) {
@@ -43,10 +55,16 @@ public class MatrixStack {
     }
 
     public float[] multiplyVector(float x, float y, float z, float w) {
-        Vector4f vec = new Vector4f(x, y, z, w);
+        this.transformPoint(x, y, z, w, this.scratchOut);
+        return new float[] {this.scratchOut[0], this.scratchOut[1], this.scratchOut[2], this.scratchOut[3]};
+    }
 
-        vec.mul(this.mat.last().pose());
-
-        return new float[] {vec.x(), vec.y(), vec.z(), vec.w()};
+    public void transformPoint(float x, float y, float z, float w, float[] out4) {
+        this.scratchVec.set(x, y, z, w);
+        this.scratchVec.mul(this.mat.last().pose());
+        out4[0] = this.scratchVec.x();
+        out4[1] = this.scratchVec.y();
+        out4[2] = this.scratchVec.z();
+        out4[3] = this.scratchVec.w();
     }
 }

@@ -35,9 +35,7 @@ public class RenderCrosshairEventMixin {
                 return;
             }
 
-            MatrixStack mat = new MatrixStack(event.getGuiGraphics().pose());
-
-            GuiBus.doPre(mat, event.getPartialTick());
+            GuiBus.doPre(GuiBus.wrapPose(event.getGuiGraphics().pose()), event.getPartialTick());
         }
     }
 
@@ -53,9 +51,7 @@ public class RenderCrosshairEventMixin {
                 return;
             }
 
-            MatrixStack mat = new MatrixStack(event.getGuiGraphics().pose());
-
-            GuiBus.doPost(mat, event.getPartialTick());
+            GuiBus.doPost(GuiBus.wrapPose(event.getGuiGraphics().pose()), event.getPartialTick());
         }
     }
 

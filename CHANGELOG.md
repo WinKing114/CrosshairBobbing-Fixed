@@ -2,6 +2,10 @@
 
 All notable changes to this fork. Versions are based on the upstream release they fork from.
 
+## [1.11.0] — 2026-11-28
+
+Version 1.11.0 reuses buffers when drawing the crosshair and uses elapsed frame time for animation. Existing animation settings carry over.
+
 ## Source publication documentation — 2026-11-11
 
 - Added maintainer attribution, installation instructions and a separate TESTING.md.

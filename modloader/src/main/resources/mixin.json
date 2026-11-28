@@ -1,4 +1,5 @@
 {
-    "required": true,
-    "plugin": "${MOD_PACKAGE}.loader.fabric.MixinPlugin"
+  "required": true,
+  "plugin": "${MOD_PACKAGE}.loader.fabric.MixinPlugin",
+  "minVersion": "0.8"
 }

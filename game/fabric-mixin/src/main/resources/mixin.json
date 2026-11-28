@@ -1,5 +1,6 @@
 {
-    "required": true,
-    "package": "${MOD_PACKAGE}.mixin",
-    "plugin": "${MOD_PACKAGE}.mixin.MixinPlugin"
+  "required": true,
+  "package": "${MOD_PACKAGE}.mixin",
+  "plugin": "${MOD_PACKAGE}.mixin.MixinPlugin",
+  "minVersion": "0.8"
 }

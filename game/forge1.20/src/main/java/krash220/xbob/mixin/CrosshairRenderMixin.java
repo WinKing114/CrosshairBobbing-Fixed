@@ -40,13 +40,13 @@ public class CrosshairRenderMixin {
             at = @At("HEAD"),
             require = 0)
     private void xbobBeforeCrosshair(GuiGraphics guiGraphics, CallbackInfo ci) {
-        GuiBus.doPre(new MatrixStack(guiGraphics.pose()), Minecraft.getInstance().getPartialTick());
+        GuiBus.doPre(GuiBus.wrapPose(guiGraphics.pose()), Minecraft.getInstance().getPartialTick());
     }
 
     @Inject(method = RENDER_CROSSHAIR,
             at = @At("RETURN"),
             require = 0)
     private void xbobAfterCrosshair(GuiGraphics guiGraphics, CallbackInfo ci) {
-        GuiBus.doPost(new MatrixStack(guiGraphics.pose()), Minecraft.getInstance().getPartialTick());
+        GuiBus.doPost(GuiBus.wrapPose(guiGraphics.pose()), Minecraft.getInstance().getPartialTick());
     }
 }

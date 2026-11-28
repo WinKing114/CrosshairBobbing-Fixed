@@ -69,10 +69,16 @@ public class GuiBus {
         }
     }
 
+    private static final MatrixStack REUSED_STACK = new MatrixStack(null);
+
+    public static MatrixStack wrapPose(com.mojang.blaze3d.vertex.PoseStack pose) {
+        return REUSED_STACK.rebind(pose);
+    }
+
     @SubscribeEvent
     public static void post(RenderGuiOverlayEvent.Post event) {
         if (event.getOverlay() == VanillaGuiOverlay.CROSSHAIR.type()) {
-            finishFrame(new MatrixStack(event.getGuiGraphics().pose()), event.getPartialTick());
+            finishFrame(wrapPose(event.getGuiGraphics().pose()), event.getPartialTick());
         }
     }
 }

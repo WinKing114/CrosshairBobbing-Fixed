@@ -20,6 +20,7 @@ public class PlayerBus {
     public static void registerAttack(Consumer<Float> attack) {
         if (!registered) {
             MinecraftForge.EVENT_BUS.register(PlayerBus.class);
+            registered = true;
         }
 
         PlayerBus.attack.add(attack);
